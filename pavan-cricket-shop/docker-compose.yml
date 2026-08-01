@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  postgres-db:
+    image: postgres:16
+    container_name: cricket-postgres
+    environment:
+      POSTGRES_DB: cricketdb
+      POSTGRES_USER: cricketuser
+      POSTGRES_PASSWORD: cricketpass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  app-tier:
+    build: ./app-tier
+    container_name: cricket-app
+    environment:
+      DB_HOST: postgres-db
+      DB_PORT: 5432
+      DB_NAME: cricketdb
+      DB_USER: cricketuser
+      DB_PASSWORD: cricketpass
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres-db
+
+  web-tier:
+    build: ./web-tier
+    container_name: cricket-web
+    ports:
+      - "80:80"
+    depends_on:
+      - app-tier
+
+volumes:
+  postgres-data:

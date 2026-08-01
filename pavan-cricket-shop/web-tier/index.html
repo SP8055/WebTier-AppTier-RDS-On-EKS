@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pavan Cricket Shop</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+        }
+        .header {
+            background: linear-gradient(135deg, #1a5d1a, #2e8b2e);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+        .header p {
+            margin: 8px 0 0;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        /* Favorites Section */
+        .favorites-section {
+            padding: 30px 40px 10px;
+            text-align: center;
+        }
+        .favorites-title {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 5px;
+        }
+        .favorites-subtitle {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 25px;
+        }
+        .favorites-cards {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+        .fav-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            width: 180px;
+            transition: transform 0.3s ease;
+        }
+        .fav-card:hover {
+            transform: translateY(-8px);
+        }
+        .fav-card img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+        .fav-card h3 {
+            margin: 5px 0 3px;
+            font-size: 15px;
+            color: #1a5d1a;
+        }
+        .fav-card p {
+            margin: 0;
+            font-size: 13px;
+            color: #666;
+        }
+
+        /* Ball animation - bounce */
+        .ball-img {
+            animation: bounce 1.5s infinite ease-in-out;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* Bat animation - slight swing */
+        .bat-img {
+            animation: swing 2s infinite ease-in-out;
+            transform-origin: bottom center;
+        }
+        @keyframes swing {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        .container {
+            padding: 20px 40px 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #1a5d1a;
+            color: white;
+        }
+        tr:hover {
+            background: #f1f1f1;
+        }
+        .price {
+            font-weight: bold;
+            color: #d9534f;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>🏏 Welcome to Pavan Cricket Shop</h1>
+        <p>Your one-stop shop for premium cricket gear</p>
+    </div>
+
+    <div class="favorites-section">
+        <div class="favorites-title">Right-Handed Batsman</div>
+        <div class="favorites-subtitle">Pavan's Favorites</div>
+
+        <div class="favorites-cards">
+            <div class="fav-card">
+                <img src="images/dhoni.jpg" alt="Favorite Player">
+                <h3>Favorite Player</h3>
+                <p>MS Dhoni</p>
+            </div>
+
+            <div class="fav-card">
+                <img src="images/mrf-bat.webp" alt="Favorite Bat" class="bat-img">
+                <h3>Favorite Bat</h3>
+                <p>MRF Grand Edition</p>
+            </div>
+
+            <div class="fav-card">
+                <img src="images/kookaburra-ball.webp" alt="Favorite Ball" class="ball-img">
+                <h3>Favorite Ball</h3>
+                <p>Kookaburra Turf White</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <table id="productsTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Price (₹)</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody id="productsBody">
+                <tr><td colspan="4">Loading...</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const API_URL = window.BACKEND_API_URL || "http://localhost:8080";
+
+        fetch(API_URL + "/api/products")
+            .then(response => response.json())
+            .then(data => {
+                const tbody = document.getElementById("productsBody");
+                tbody.innerHTML = "";
+                data.forEach(product => {
+                    const row = `<tr>
+                        <td>${product.name}</td>
+                        <td>${product.category}</td>
+                        <td class="price">₹${product.price}</td>
+                        <td>${product.description}</td>
+                    </tr>`;
+                    tbody.innerHTML += row;
+                });
+            })
+            .catch(err => {
+                document.getElementById("productsBody").innerHTML =
+                    "<tr><td colspan='4'>Error loading products: " + err + "</td></tr>";
+            });
+    </script>
+
+</body>
+</html>

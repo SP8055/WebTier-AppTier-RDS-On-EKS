@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cricket-web
+  namespace: cricket-shop
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cricket-web
+  template:
+    metadata:
+      labels:
+        app: cricket-web
+    spec:
+      containers:
+        - name: cricket-web
+          image: <your-dockerhub-username>/cricket-web:1.0
+          ports:
+            - containerPort: 80

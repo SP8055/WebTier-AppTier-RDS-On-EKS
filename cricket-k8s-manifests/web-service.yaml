@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cricket-web
+  namespace: cricket-shop
+spec:
+  selector:
+    app: cricket-web
+  ports:
+    - port: 80
+  type: LoadBalancer

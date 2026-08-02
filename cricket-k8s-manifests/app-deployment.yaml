@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cricket-app
+  namespace: cricket-shop
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cricket-app
+  template:
+    metadata:
+      labels:
+        app: cricket-app
+    spec:
+      containers:
+        - name: cricket-app
+          image: <your-dockerhub-username>/cricket-app:1.0
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_HOST
+              value: "<STEP-3-rds_endpoint-value>"
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_NAME
+              value: "cricketdb"
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: rds-secret
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: rds-secret
+                  key: password

@@ -1,4 +1,4 @@
-package com.cricketshop.model;
+package app;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;

@@ -1,7 +1,5 @@
-package com.cricketshop.controller;
+package app;
 
-import com.cricketshop.model.CricketProduct;
-import com.cricketshop.repository.CricketProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

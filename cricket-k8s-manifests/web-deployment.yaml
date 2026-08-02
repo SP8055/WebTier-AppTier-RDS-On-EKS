@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
         - name: cricket-web
-          image: <your-dockerhub-username>/cricket-web:1.0
+          image: gsreeram123/cricket-web:1
           ports:
             - containerPort: 80

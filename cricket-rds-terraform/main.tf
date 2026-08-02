@@ -3,10 +3,7 @@ provider "aws" {
 }
 
 data "aws_vpc" "eks_vpc" {
-  filter {
-    name   = "tag:aws:eks:cluster-name"
-    values = ["cricket-shop-cluster"]
-  }
+  id = "vpc-035c2edffec2b6edc"
 }
 
 data "aws_subnets" "eks_subnets" {

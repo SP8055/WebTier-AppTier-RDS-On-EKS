@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 data "aws_vpc" "eks_vpc" {
-  id = "vpc-035c2edffec2b6edc"
+  id = "vpc-03627fd848189b87c"
 }
 
 data "aws_subnets" "eks_subnets" {
